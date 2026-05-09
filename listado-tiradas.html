@@ -267,7 +267,7 @@
 
     <!-- BUSCADOR -->
     <div class="buscador-wrapper">
-      <i class="ph ph-magnifying-glass"></i aria-hidden="true">
+      <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
       <input
         type="text"
         id="buscador-input"
@@ -276,21 +276,21 @@
         autocomplete="off"
       />
       <button id="buscador-limpiar" class="buscador-btn-limpiar" type="button" aria-label="Limpiar búsqueda">
-        <i class="ph ph-x"></i aria-hidden="true">
+        <i class="ph ph-x" aria-hidden="true"></i>
       </button>
     </div>
 
     <!-- GRID DE TIRADAS -->
     <div id="tiradas-grid" class="tiradas-grid">
       <div class="loading-state">
-        <i class="ph ph-spinner spinner"></i aria-hidden="true"> Cargando tiradas...
+        <i class="ph ph-spinner spinner" aria-hidden="true"></i> Cargando tiradas...
       </div>
     </div>
   </main>
 
   <nav class="listado-nav">
     <a href="tipos-lecturas.html" class="btn-nav">
-      <i class="ph ph-arrow-left"></i aria-hidden="true"> Volver
+      <i class="ph ph-arrow-left" aria-hidden="true"></i> Volver
     </a>
   </nav>
 
@@ -351,7 +351,7 @@
       if (!tiradas || tiradas.length === 0) {
         grid.innerHTML = `
           <div class="empty-state" style="grid-column: 1/-1">
-            <i class="ph ph-magnifying-glass"></i aria-hidden="true">
+            <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
             <p>Sin consultas para esta búsqueda</p>
           </div>`;
         return;
@@ -380,7 +380,7 @@
       } catch (err) {
         document.getElementById('tiradas-grid').innerHTML = `
           <div class="empty-state" style="grid-column: 1/-1">
-            <i class="ph ph-warning-circle"></i aria-hidden="true">
+            <i class="ph ph-warning-circle" aria-hidden="true"></i>
             <p>Error al cargar las tiradas. Recarga la página.</p>
           </div>`;
         console.error('[listado-tiradas] Error:', err);

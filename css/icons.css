@@ -156,6 +156,10 @@
   mask-position: center;
   -webkit-mask-size: contain;
   mask-size: contain;
+  /* Dimensiones absolutas — no dependen de font-size del contexto */
+  width: 2.4rem !important;
+  height: 2.4rem !important;
+  display: inline-block !important;
 }
 
 .ph-heart.tema-icono {
