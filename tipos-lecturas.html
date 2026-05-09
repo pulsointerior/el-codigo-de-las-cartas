@@ -163,61 +163,61 @@
       <button class="tema-btn" data-tema="amor" type="button" aria-label="Ver consultas de Amor y Relaciones">
         <i class="ph ph-heart tema-icono" aria-hidden="true"></i>
         <span class="tema-nombre">Amor</span>
-        <span class="tema-count">23 consultas</span>
+        <span class="tema-count" id="count-amor">…</span>
       </button>
 
       <button class="tema-btn" data-tema="consultas_generales" type="button" aria-label="Ver consultas de Consulta General">
         <i class="ph ph-compass-rose tema-icono" aria-hidden="true"></i>
         <span class="tema-nombre">General</span>
-        <span class="tema-count">10 consultas</span>
+        <span class="tema-count" id="count-consultas_generales">…</span>
       </button>
 
       <button class="tema-btn" data-tema="creatividad_proyectos" type="button" aria-label="Ver consultas de Creatividad y Proyectos">
         <i class="ph ph-paint-brush tema-icono" aria-hidden="true"></i>
         <span class="tema-nombre">Creatividad</span>
-        <span class="tema-count">15 consultas</span>
+        <span class="tema-count" id="count-creatividad_proyectos">…</span>
       </button>
 
       <button class="tema-btn" data-tema="crisis_transformacion" type="button" aria-label="Ver consultas de Crisis y Transformación">
         <i class="ph ph-arrows-out-cardinal tema-icono" aria-hidden="true"></i>
         <span class="tema-nombre">Crisis y Transformación</span>
-        <span class="tema-count">15 consultas</span>
+        <span class="tema-count" id="count-crisis_transformacion">…</span>
       </button>
 
       <button class="tema-btn" data-tema="decisiones_elecciones" type="button" aria-label="Ver consultas de Decisiones y Elecciones">
         <i class="ph ph-crosshair tema-icono" aria-hidden="true"></i>
         <span class="tema-nombre">Decisiones</span>
-        <span class="tema-count">14 consultas</span>
+        <span class="tema-count" id="count-decisiones_elecciones">…</span>
       </button>
 
       <button class="tema-btn" data-tema="espiritualidad_crecimiento" type="button" aria-label="Ver consultas de Espiritualidad y Crecimiento">
         <i class="ph ph-star tema-icono" aria-hidden="true"></i>
         <span class="tema-nombre">Espiritualidad</span>
-        <span class="tema-count">14 consultas</span>
+        <span class="tema-count" id="count-espiritualidad_crecimiento">…</span>
       </button>
 
       <button class="tema-btn" data-tema="familia_hogar" type="button" aria-label="Ver consultas de Familia y Hogar">
         <i class="ph ph-house tema-icono" aria-hidden="true"></i>
         <span class="tema-nombre">Familia y Hogar</span>
-        <span class="tema-count">18 consultas</span>
+        <span class="tema-count" id="count-familia_hogar">…</span>
       </button>
 
       <button class="tema-btn" data-tema="salud_bienestar" type="button" aria-label="Ver consultas de Salud y Bienestar">
         <i class="ph ph-pulse tema-icono" aria-hidden="true"></i>
         <span class="tema-nombre">Salud</span>
-        <span class="tema-count">18 consultas</span>
+        <span class="tema-count" id="count-salud_bienestar">…</span>
       </button>
 
       <button class="tema-btn" data-tema="trabajo_dinero" type="button" aria-label="Ver consultas de Finanzas y Trabajo">
         <i class="ph ph-briefcase-metal tema-icono" aria-hidden="true"></i>
         <span class="tema-nombre">Finanzas y Trabajo</span>
-        <span class="tema-count">16 consultas</span>
+        <span class="tema-count" id="count-trabajo_dinero">…</span>
       </button>
 
       <button class="tema-btn" data-tema="viajes_mudanzas" type="button" aria-label="Ver consultas de Viajes y Mudanzas">
         <i class="ph ph-airplane tema-icono" aria-hidden="true"></i>
         <span class="tema-nombre">Viajes y Mudanzas</span>
-        <span class="tema-count">12 consultas</span>
+        <span class="tema-count" id="count-viajes_mudanzas">…</span>
       </button>
 
     </div>
@@ -235,13 +235,31 @@
 
   <script type="module">
     import { navigateTo } from './js/navigation.js';
+    import { getTiradas } from './js/data.js';
 
+    // ── Navegación ───────────────────────────────────────────────────────────
     document.querySelectorAll('.tema-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const tema = btn.dataset.tema;
         navigateTo('listado-tiradas.html?tema=' + tema);
       });
     });
+
+    // ── Conteos dinámicos desde el JSON ──────────────────────────────────────
+    try {
+      const tiradas = await getTiradas();
+      const conteos = {};
+      tiradas.forEach(t => {
+        conteos[t.tema] = (conteos[t.tema] || 0) + 1;
+      });
+      Object.entries(conteos).forEach(([tema, n]) => {
+        const el = document.getElementById('count-' + tema);
+        if (el) el.textContent = n + ' consultas';
+      });
+    } catch (err) {
+      // Si falla la carga, los spans muestran "…" sin romper nada
+      console.warn('[tipos-lecturas] No se pudieron cargar los conteos:', err);
+    }
   </script>
 
 </body>
